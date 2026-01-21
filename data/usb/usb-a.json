@@ -1,0 +1,100 @@
+{
+  "type": "USB-A",
+  "full_name": "USB Standard-A",
+  "standard_body": "USB-IF",
+  "common_names": ["USB-A", "USB Type-A", "Standard USB"],
+  "protocols": {
+    "USB 1.1": {
+      "version": "1.1",
+      "data_rate": "12 Mbps",
+      "data_rate_mbps": 12,
+      "power_delivery": "2.5W (500mA @ 5V)",
+      "features": ["Full Speed", "Basic data transfer"],
+      "cable_requirements": "Any USB-A cable",
+      "max_length": "5m"
+    },
+    "USB 2.0": {
+      "version": "2.0",
+      "data_rate": "480 Mbps",
+      "data_rate_mbps": 480,
+      "power_delivery": "2.5W (500mA @ 5V), 7.5W with BC 1.2",
+      "features": ["Hi-Speed", "Charging (BC 1.2)"],
+      "cable_requirements": "Any USB-A cable",
+      "max_length": "5m"
+    },
+    "USB 3.2 Gen 1": {
+      "version": "3.2 Gen 1 (formerly USB 3.0)",
+      "data_rate": "5 Gbps",
+      "data_rate_mbps": 5000,
+      "power_delivery": "4.5W (900mA @ 5V)",
+      "features": ["SuperSpeed", "Blue connector interior"],
+      "cable_requirements": "USB 3.x cable with additional pins",
+      "max_length": "3m"
+    },
+    "USB 3.2 Gen 2": {
+      "version": "3.2 Gen 2 (formerly USB 3.1)",
+      "data_rate": "10 Gbps",
+      "data_rate_mbps": 10000,
+      "power_delivery": "4.5W (900mA @ 5V)",
+      "features": ["SuperSpeed+", "Teal connector interior (sometimes)"],
+      "cable_requirements": "USB 3.2 Gen 2 rated cable",
+      "max_length": "1m"
+    }
+  },
+  "connector": {
+    "pins": 9,
+    "rows": 2,
+    "pitch": 2.0,
+    "width": 12.0,
+    "height": 4.5,
+    "depth": 14.0,
+    "reversible": false,
+    "shape": "rectangular",
+    "unit": "mm"
+  },
+  "electrical": {
+    "voltage_max": 5,
+    "current_max": 0.9,
+    "power_max": 4.5,
+    "impedance": "90Ω differential (SuperSpeed)"
+  },
+  "compatibility": {
+    "backwards": ["USB 1.0", "USB 1.1"],
+    "forwards": ["USB 3.2 Gen 2"],
+    "adapters_to": ["USB-C", "Micro USB", "Mini USB", "USB-B"],
+    "adapters_from": ["USB-C"]
+  },
+  "common_devices": [
+    "Desktop computers",
+    "Laptops (host ports)",
+    "Wall chargers",
+    "USB hubs",
+    "Flash drives",
+    "Keyboards and mice",
+    "External hard drives",
+    "Game controllers"
+  ],
+  "confusion_points": [
+    "USB 3.x USB-A has 9 pins but is backwards compatible with 4-pin USB 2.0 cables and devices",
+    "Blue interior usually indicates USB 3.x, but this is a convention not a requirement",
+    "USB-A ports labeled 'SS' (SuperSpeed) support USB 3.x speeds",
+    "USB 3.2 Gen 1 was previously called USB 3.0, and USB 3.2 Gen 2 was USB 3.1 - the naming changed in 2019",
+    "A USB 2.0 cable in a USB 3.x port will only run at USB 2.0 speeds",
+    "USB-A cannot support USB 3.2 Gen 2x2 (20 Gbps) - that requires USB-C on both ends"
+  ],
+  "buying_guide": "For USB 3.x speeds, ensure the cable has the blue interior or is explicitly rated for USB 3.0/3.1/3.2. Check for the SuperSpeed (SS) logo. For charging, look for cables rated for higher amperage if using with BC 1.2 chargers. Note that USB-A is limited to 10 Gbps max - for faster speeds, you need USB-C.",
+  "notes": "USB-A is the original USB connector and remains ubiquitous on host devices. While being phased out in favor of USB-C, it will remain common for years due to the massive installed base. The connector was intentionally designed to be non-reversible to ensure proper power delivery orientation, though this is often cited as a design flaw compared to USB-C's reversibility.",
+  "sources": [
+    {
+      "name": "USB-IF USB 2.0 Specification",
+      "url": "https://www.usb.org/document-library/usb-20-specification",
+      "access_date": "2025-01-15"
+    },
+    {
+      "name": "USB-IF USB 3.2 Specification",
+      "url": "https://www.usb.org/document-library/usb-32-specification-released-september-22-2017-and-ecns",
+      "access_date": "2025-01-15"
+    }
+  ],
+  "last_updated": "2025-01-21"
+}

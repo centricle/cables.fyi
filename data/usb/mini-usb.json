@@ -1,0 +1,80 @@
+{
+  "type": "Mini USB",
+  "full_name": "USB Mini-B",
+  "standard_body": "USB-IF",
+  "common_names": ["Mini USB", "Mini-B", "Mini USB-B"],
+  "protocols": {
+    "USB 1.1": {
+      "version": "1.1",
+      "data_rate": "12 Mbps",
+      "data_rate_mbps": 12,
+      "power_delivery": "2.5W (500mA @ 5V)",
+      "features": ["Full Speed"],
+      "cable_requirements": "Standard Mini USB cable",
+      "max_length": "5m"
+    },
+    "USB 2.0": {
+      "version": "2.0",
+      "data_rate": "480 Mbps",
+      "data_rate_mbps": 480,
+      "power_delivery": "2.5W (500mA @ 5V)",
+      "features": ["Hi-Speed", "OTG support (Mini-AB variant)"],
+      "cable_requirements": "Standard Mini USB cable",
+      "max_length": "5m"
+    }
+  },
+  "connector": {
+    "pins": 5,
+    "rows": 1,
+    "pitch": 0.8,
+    "width": 6.8,
+    "height": 3.0,
+    "depth": 7.0,
+    "reversible": false,
+    "shape": "trapezoidal",
+    "unit": "mm"
+  },
+  "electrical": {
+    "voltage_max": 5,
+    "current_max": 0.5,
+    "power_max": 2.5
+  },
+  "compatibility": {
+    "backwards": ["USB 1.0", "USB 1.1"],
+    "forwards": [],
+    "adapters_to": ["USB-A", "USB-C", "Micro USB"],
+    "adapters_from": ["USB-A", "USB-C"]
+  },
+  "common_devices": [
+    "Digital cameras (older models)",
+    "MP3 players (early 2000s)",
+    "Older GPS devices (Garmin)",
+    "PS3 controllers",
+    "Texas Instruments calculators",
+    "Older external hard drives",
+    "GoPro cameras (older models)",
+    "Some audio interfaces"
+  ],
+  "confusion_points": [
+    "Mini USB is larger and taller than Micro USB - they are not interchangeable",
+    "Mini USB was deprecated by USB-IF in 2007 in favor of Micro USB",
+    "Mini-A, Mini-B, and Mini-AB connectors exist but Mini-B is by far the most common",
+    "Mini USB has no USB 3.0 variant - it maxes out at USB 2.0 speeds",
+    "Mini USB is rated for only 5,000 insertions vs 10,000 for Micro USB"
+  ],
+  "buying_guide": "Mini USB cables are becoming harder to find as the connector is largely deprecated. Any Mini USB cable will work for data and charging since there's no USB 3.0 variant to worry about. If you have devices still using Mini USB, consider stocking up on cables or using adapters.",
+  "notes": "Mini USB was introduced with USB 2.0 in 2000 and was the standard small device connector before Micro USB. It was officially deprecated by USB-IF in 2007 due to durability concerns and the desire for an even smaller connector. However, many devices continued to use it for years, and some niche devices still ship with Mini USB ports today. The PS3 controller's use of Mini USB kept it relevant longer than expected.",
+  "sources": [
+    {
+      "name": "USB-IF USB 2.0 Specification",
+      "url": "https://www.usb.org/document-library/usb-20-specification",
+      "access_date": "2025-01-15"
+    },
+    {
+      "name": "USB-IF On-The-Go Supplement",
+      "url": "https://www.usb.org/document-library/usb-specification-packages",
+      "access_date": "2025-01-15"
+    }
+  ],
+  "last_updated": "2025-01-21"
+}

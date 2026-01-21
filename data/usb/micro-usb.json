@@ -1,0 +1,82 @@
+{
+  "type": "Micro USB",
+  "full_name": "USB Micro-B",
+  "standard_body": "USB-IF",
+  "common_names": ["Micro USB", "Micro-B", "Micro USB-B"],
+  "protocols": {
+    "USB 2.0": {
+      "version": "2.0",
+      "data_rate": "480 Mbps",
+      "data_rate_mbps": 480,
+      "power_delivery": "2.5W (500mA @ 5V), up to 7.5W with BC 1.2",
+      "features": ["Hi-Speed", "Charging (BC 1.2)", "OTG support"],
+      "cable_requirements": "Standard Micro USB cable",
+      "max_length": "5m"
+    },
+    "USB 3.0 Micro-B": {
+      "version": "3.0 (SuperSpeed Micro-B)",
+      "data_rate": "5 Gbps",
+      "data_rate_mbps": 5000,
+      "power_delivery": "4.5W (900mA @ 5V)",
+      "features": ["SuperSpeed", "Wider connector with additional pins"],
+      "cable_requirements": "USB 3.0 Micro-B cable (wider connector)",
+      "max_length": "3m"
+    }
+  },
+  "connector": {
+    "pins": 5,
+    "rows": 1,
+    "pitch": 0.65,
+    "width": 6.85,
+    "height": 1.8,
+    "depth": 5.0,
+    "reversible": false,
+    "shape": "trapezoidal",
+    "unit": "mm"
+  },
+  "electrical": {
+    "voltage_max": 5,
+    "current_max": 0.9,
+    "power_max": 4.5,
+    "impedance": "90Ω differential (USB 3.0)"
+  },
+  "compatibility": {
+    "backwards": ["USB 1.1"],
+    "forwards": [],
+    "adapters_to": ["USB-A", "USB-C"],
+    "adapters_from": ["USB-A", "USB-C"]
+  },
+  "common_devices": [
+    "Older Android smartphones (pre-2016)",
+    "E-readers (Kindle)",
+    "Bluetooth speakers and headphones",
+    "Portable chargers/power banks",
+    "Digital cameras",
+    "Game controllers (PS4, older Xbox)",
+    "GPS devices",
+    "Older tablets"
+  ],
+  "confusion_points": [
+    "USB 3.0 Micro-B is a completely different, wider connector than USB 2.0 Micro-B",
+    "USB 2.0 Micro-B cables fit into USB 3.0 Micro-B ports, but only at USB 2.0 speeds",
+    "USB 3.0 Micro-B cables do NOT fit into USB 2.0 Micro-B ports",
+    "Micro USB and Mini USB are different connectors - Micro is smaller and flatter",
+    "OTG (On-The-Go) cables have a special pin configuration allowing devices to act as hosts",
+    "Many cheap Micro USB cables are charge-only with no data wires - test before trusting"
+  ],
+  "buying_guide": "For most devices, any Micro USB cable works. For external hard drives or devices needing USB 3.0 speeds, you need the wider USB 3.0 Micro-B cable. For charging, look for cables rated for 2A or higher current. Beware of extremely cheap cables that may be charge-only (missing data wires) or poorly shielded.",
+  "notes": "Micro USB was mandated by the EU in 2009 as a common charging standard, leading to its widespread adoption on Android phones. It was designed to be more durable than Mini USB with a rated 10,000 insertion cycles. However, its non-reversible design and fragile-feeling connector led to its replacement by USB-C starting around 2015-2016.",
+  "sources": [
+    {
+      "name": "USB-IF USB 2.0 Specification",
+      "url": "https://www.usb.org/document-library/usb-20-specification",
+      "access_date": "2025-01-15"
+    },
+    {
+      "name": "USB-IF Micro-USB Specification",
+      "url": "https://www.usb.org/document-library/micro-usb-10-specification",
+      "access_date": "2025-01-15"
+    }
+  ],
+  "last_updated": "2025-01-21"
+}
