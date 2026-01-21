@@ -1,0 +1,110 @@
+{
+  "type": "HDMI",
+  "full_name": "High-Definition Multimedia Interface",
+  "standard_body": "HDMI Forum",
+  "common_names": ["HDMI"],
+  "protocols": {
+    "HDMI 1.4": {
+      "version": "1.4",
+      "data_rate": "10.2 Gbps",
+      "data_rate_mbps": 10200,
+      "video_support": ["4K@30Hz", "1080p@120Hz", "3D"],
+      "features": ["Audio Return Channel (ARC)", "3D support", "Ethernet channel"],
+      "cable_requirements": "High Speed HDMI cable",
+      "max_length": "15m at 1080p, 5m at 4K"
+    },
+    "HDMI 2.0": {
+      "version": "2.0",
+      "data_rate": "18 Gbps",
+      "data_rate_mbps": 18000,
+      "video_support": ["4K@60Hz", "1080p@240Hz", "HDR10"],
+      "features": ["4K@60Hz", "HDR support", "32 audio channels", "Dual video streams"],
+      "cable_requirements": "Premium High Speed HDMI cable",
+      "max_length": "5m for 4K@60Hz"
+    },
+    "HDMI 2.0b": {
+      "version": "2.0b",
+      "data_rate": "18 Gbps",
+      "data_rate_mbps": 18000,
+      "video_support": ["4K@60Hz", "HDR10", "HLG"],
+      "features": ["HDR10", "HLG (broadcast HDR)", "Same bandwidth as 2.0"],
+      "cable_requirements": "Premium High Speed HDMI cable",
+      "max_length": "5m for 4K@60Hz"
+    },
+    "HDMI 2.1": {
+      "version": "2.1",
+      "data_rate": "48 Gbps",
+      "data_rate_mbps": 48000,
+      "video_support": ["4K@120Hz", "8K@60Hz", "10K"],
+      "features": ["Variable Refresh Rate (VRR)", "Auto Low Latency Mode (ALLM)", "Enhanced ARC (eARC)", "Quick Frame Transport (QFT)", "Dynamic HDR"],
+      "cable_requirements": "Ultra High Speed HDMI cable",
+      "max_length": "3m passive for 48Gbps, longer with active cables"
+    },
+    "HDMI 2.1a": {
+      "version": "2.1a",
+      "data_rate": "48 Gbps",
+      "data_rate_mbps": 48000,
+      "video_support": ["4K@120Hz", "8K@60Hz"],
+      "features": ["Source-Based Tone Mapping (SBTM)", "All 2.1 features"],
+      "cable_requirements": "Ultra High Speed HDMI cable",
+      "max_length": "3m passive for 48Gbps"
+    }
+  },
+  "connector": {
+    "pins": 19,
+    "rows": 2,
+    "width": 13.9,
+    "height": 4.45,
+    "depth": 10.0,
+    "reversible": false,
+    "shape": "trapezoidal",
+    "unit": "mm"
+  },
+  "electrical": {
+    "voltage_max": 5,
+    "current_max": 0.055,
+    "power_max": 0.275
+  },
+  "compatibility": {
+    "backwards": ["DVI-D (video only, no audio)", "HDMI 1.0-1.3"],
+    "forwards": ["HDMI 2.1"],
+    "adapters_to": ["DVI", "DisplayPort (active)", "VGA (active)", "USB-C (active)"],
+    "adapters_from": ["DisplayPort", "DVI", "USB-C/Thunderbolt", "VGA (active)"]
+  },
+  "common_devices": [
+    "TVs",
+    "Monitors",
+    "Gaming consoles (PS5, Xbox Series X)",
+    "Streaming devices (Roku, Apple TV)",
+    "Laptops",
+    "Graphics cards",
+    "Blu-ray players",
+    "AV receivers",
+    "Projectors"
+  ],
+  "confusion_points": [
+    "HDMI 2.1 ports may not support all 2.1 features - manufacturers can pick and choose which features to implement",
+    "A 4K@120Hz display requires HDMI 2.1 - HDMI 2.0 maxes out at 4K@60Hz",
+    "Not all HDMI cables support all HDMI versions - look for 'Ultra High Speed' for 2.1",
+    "HDMI cables are not rated by version number - they're rated by speed (High Speed, Premium High Speed, Ultra High Speed)",
+    "VRR and ALLM are HDMI 2.1 features but some 2.0 devices support them via firmware",
+    "eARC requires HDMI 2.1 and a compatible cable - regular ARC works on HDMI 1.4+",
+    "Mini HDMI and Micro HDMI are physically different connectors with the same capabilities",
+    "HDMI ARC only works on specific labeled ports - usually HDMI 1 or 2 on TVs"
+  ],
+  "buying_guide": "For 4K@60Hz HDR, get a Premium High Speed cable. For 4K@120Hz, 8K, or VRR gaming, you need an Ultra High Speed cable with HDMI 2.1 certification. Look for the holographic label on certified cables. Avoid extremely cheap cables for high-bandwidth uses. Cable length matters - longer cables may not support full bandwidth.",
+  "notes": "HDMI has been the dominant consumer A/V connector since the mid-2000s. The transition to HDMI 2.1 has been confusing because manufacturers can implement subsets of features. When buying a TV or monitor for gaming, verify specific feature support (VRR, ALLM, 4K@120Hz) rather than just checking for 'HDMI 2.1' branding.",
+  "sources": [
+    {
+      "name": "HDMI Forum Specifications",
+      "url": "https://www.hdmi.org/spec/index",
+      "access_date": "2025-01-15"
+    },
+    {
+      "name": "HDMI Cable Certification",
+      "url": "https://www.hdmi.org/resource/cables",
+      "access_date": "2025-01-15"
+    }
+  ],
+  "last_updated": "2025-01-21"
+}
