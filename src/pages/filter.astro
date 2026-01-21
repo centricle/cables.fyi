@@ -1,0 +1,446 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAllCategories, getMaxDataRate, getMaxPower, getNormalizedPowerWatts, getVideoCapabilities, hasVideoSupport } from '../utils/cableData';
+
+const allCategories = getAllCategories();
+
+// Prepare client-side data with normalized fields for filtering
+const clientCables = allCategories.flatMap(cat =>
+  cat.cables.map(cable => {
+    return {
+      type: cable.type,
+      full_name: cable.full_name,
+      categorySlug: cat.slug,
+      categoryName: cat.name,
+      standard_body: cable.standard_body,
+      max_rate_mbps: getMaxDataRate(cable),
+      max_power: getNormalizedPowerWatts(cable),
+      pins: cable.connector.pins,
+      reversible: cable.connector.reversible,
+      video_capabilities: getVideoCapabilities(cable),
+      has_video: hasVideoSupport(cable),
+      confusion_points: cable.confusion_points,
+      notes: cable.notes
+    };
+  })
+);
+
+const categoryList = allCategories.map(cat => ({ name: cat.name, slug: cat.slug }));
+
+const title = 'Filter Cables | Cables.Guide';
+const description = 'Find cables by specifications: data rate, power delivery, video support, and more.';
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <nav class="flex mb-6" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+              <a href="/" class="text-gray-700 hover:underline">Home</a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <span class="mr-2 text-gray-400">/</span>
+                <span class="text-gray-500 uppercase">Filter</span>
+              </div>
+            </li>
+          </ol>
+        </nav>
+
+        <h1 class="text-4xl font-bold text-gray-900 mb-4 text-center">Filter Cables</h1>
+        <p class="text-gray-600 text-center max-w-2xl mx-auto">
+          Find cables by specifications. Select your requirements below.
+        </p>
+      </div>
+
+      <!-- Quick Checks -->
+      <div class="mb-8 p-4 bg-slate-50 border border-slate-200">
+        <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-3">Quick Filters</h2>
+        <div class="flex flex-wrap gap-2">
+          <a href="/filter?video=4k120" class="px-3 py-2 bg-white border border-slate-300 text-slate-700 hover:bg-blue-50 hover:border-blue-300 transition-colors text-sm">
+            4K Gaming?
+          </a>
+          <a href="/filter?power=60" class="px-3 py-2 bg-white border border-slate-300 text-slate-700 hover:bg-blue-50 hover:border-blue-300 transition-colors text-sm">
+            Fast Charging?
+          </a>
+          <a href="/filter?video=8k" class="px-3 py-2 bg-white border border-slate-300 text-slate-700 hover:bg-blue-50 hover:border-blue-300 transition-colors text-sm">
+            8K Video?
+          </a>
+          <a href="/filter?rate=40000" class="px-3 py-2 bg-white border border-slate-300 text-slate-700 hover:bg-blue-50 hover:border-blue-300 transition-colors text-sm">
+            40+ Gbps?
+          </a>
+          <a href="/filter?reversible=1" class="px-3 py-2 bg-white border border-slate-300 text-slate-700 hover:bg-blue-50 hover:border-blue-300 transition-colors text-sm">
+            Reversible?
+          </a>
+        </div>
+      </div>
+
+      <!-- Filter Controls -->
+      <div class="mb-8 p-4 bg-gray-50 border border-gray-200">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Data Rate Filter -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">Data Rate</label>
+            <div class="flex flex-wrap gap-2" id="rate-filters">
+              <button type="button" data-rate="" class="filter-chip px-3 py-1 border text-sm transition-colors">Any</button>
+              <button type="button" data-rate="1000" class="filter-chip px-3 py-1 border text-sm transition-colors">1+ Gbps</button>
+              <button type="button" data-rate="10000" class="filter-chip px-3 py-1 border text-sm transition-colors">10+ Gbps</button>
+              <button type="button" data-rate="40000" class="filter-chip px-3 py-1 border text-sm transition-colors">40+ Gbps</button>
+            </div>
+          </div>
+
+          <!-- Power Filter -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">Power Delivery</label>
+            <div class="flex flex-wrap gap-2" id="power-filters">
+              <button type="button" data-power="" class="filter-chip px-3 py-1 border text-sm transition-colors">Any</button>
+              <button type="button" data-power="15" class="filter-chip px-3 py-1 border text-sm transition-colors">15W+</button>
+              <button type="button" data-power="60" class="filter-chip px-3 py-1 border text-sm transition-colors">60W+</button>
+              <button type="button" data-power="100" class="filter-chip px-3 py-1 border text-sm transition-colors">100W+</button>
+              <button type="button" data-power="240" class="filter-chip px-3 py-1 border text-sm transition-colors">240W+</button>
+            </div>
+          </div>
+
+          <!-- Video Filter -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">Video Support</label>
+            <div class="flex flex-col gap-2" id="video-filters">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" data-video="4k60" class="video-checkbox w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <span class="text-sm text-gray-700">4K@60Hz</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" data-video="4k120" class="video-checkbox w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <span class="text-sm text-gray-700">4K@120Hz</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" data-video="8k" class="video-checkbox w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <span class="text-sm text-gray-700">8K</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Other Filters -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">Other</label>
+            <div class="flex flex-col gap-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="reversible-filter" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <span class="text-sm text-gray-700">Reversible only</span>
+              </label>
+            </div>
+
+            <label class="block text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2 mt-4">Category</label>
+            <div class="flex flex-wrap gap-2" id="category-filters">
+              <button type="button" data-category="" class="filter-chip px-3 py-1 border text-sm transition-colors">All</button>
+              {categoryList.map(cat => (
+                <button type="button" data-category={cat.slug} class="filter-chip px-3 py-1 border text-sm transition-colors">{cat.name}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Clear Filters -->
+        <div class="mt-4 pt-4 border-t border-gray-200">
+          <button type="button" id="clear-filters" class="text-sm text-gray-600 hover:text-gray-900 underline">
+            Clear all filters
+          </button>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div id="filter-status" class="mb-6 inline-flex items-center px-4 py-2 bg-blue-100 text-blue-900">
+        <span class="font-medium" id="filter-status-text"></span>
+      </div>
+
+      <!-- Results Grid -->
+      <div id="filter-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      </div>
+
+      <!-- No Results -->
+      <div id="no-results" class="text-center py-12" style="display: none;">
+        <div class="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-semibold text-gray-900 mb-2">No cables match these filters</h2>
+        <p class="text-gray-600 mb-6">
+          Try adjusting your filter criteria.
+        </p>
+        <button type="button" id="no-results-clear" class="px-4 py-2 bg-slate-800 text-white font-medium hover:bg-blue-700 transition-colors">
+          Clear filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script define:vars={{ clientCables }}>
+    const cableData = clientCables;
+
+    function formatDataRate(mbps) {
+      if (mbps >= 1000) {
+        return `${mbps / 1000} Gbps`;
+      }
+      return `${mbps} Mbps`;
+    }
+
+    function getFiltersFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        rate: params.get('rate') || '',
+        power: params.get('power') || '',
+        video: params.getAll('video'),
+        reversible: params.get('reversible') === '1',
+        category: params.get('category') || ''
+      };
+    }
+
+    function updateURL(filters) {
+      const params = new URLSearchParams();
+      if (filters.rate) params.set('rate', filters.rate);
+      if (filters.power) params.set('power', filters.power);
+      filters.video.forEach(v => params.append('video', v));
+      if (filters.reversible) params.set('reversible', '1');
+      if (filters.category) params.set('category', filters.category);
+
+      const newURL = params.toString() ? `?${params.toString()}` : window.location.pathname;
+      window.history.replaceState({}, '', newURL);
+    }
+
+    function filterCables(filters) {
+      return cableData.filter(cable => {
+        // Data rate filter
+        if (filters.rate) {
+          const minRate = parseInt(filters.rate, 10);
+          if (cable.max_rate_mbps < minRate) return false;
+        }
+
+        // Power filter
+        if (filters.power) {
+          const minPower = parseInt(filters.power, 10);
+          if (!cable.max_power || cable.max_power < minPower) return false;
+        }
+
+        // Video filters (OR logic - any match passes)
+        if (filters.video.length > 0) {
+          const videoStr = cable.video_capabilities.join(' ').toLowerCase();
+          const hasAny = filters.video.some(v => {
+            if (v === '4k60') return videoStr.includes('4k') || videoStr.includes('displayport');
+            if (v === '4k120') return videoStr.includes('4k') && (videoStr.includes('120') || videoStr.includes('2.1') || videoStr.includes('displayport 2'));
+            if (v === '8k') return videoStr.includes('8k');
+            return false;
+          });
+          if (!hasAny) return false;
+        }
+
+        // Reversible filter
+        if (filters.reversible && !cable.reversible) return false;
+
+        // Category filter
+        if (filters.category && cable.categorySlug !== filters.category) return false;
+
+        return true;
+      });
+    }
+
+    function createCableCard(cable) {
+      const confusionWarning = cable.confusion_points.length > 0
+        ? `<div class="mb-4 p-2 bg-amber-50 border border-amber-200">
+             <p class="text-amber-800 text-sm">${cable.confusion_points[0]}</p>
+           </div>`
+        : '';
+
+      const videoTag = cable.has_video
+        ? '<span class="inline-block bg-purple-100 px-2 py-0.5 text-xs text-purple-700 ml-2">Video</span>'
+        : '';
+
+      return `
+        <div class="bg-white hover:shadow-lg hover:bg-blue-50 transition-shadow duration-200 border border-gray-300">
+          <a href="/${cable.categorySlug}/${cable.type.toLowerCase().replace(/[^a-z0-9]/g, '-')}" class="block p-6">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-1">${cable.type}${videoTag}</h3>
+                <p class="text-gray-600 text-sm">${cable.full_name}</p>
+              </div>
+              <div class="text-right">
+                <span class="inline-block bg-slate-100 px-2 py-1 text-xs whitespace-nowrap text-slate-700 uppercase">
+                  ${cable.categoryName}
+                </span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p class="text-gray-500 text-xs uppercase tracking-wide">Max Speed</p>
+                <p class="text-gray-900 font-medium">${formatDataRate(cable.max_rate_mbps)}</p>
+              </div>
+              ${cable.max_power ? `
+              <div>
+                <p class="text-gray-500 text-xs uppercase tracking-wide">Max Power</p>
+                <p class="text-gray-900 font-medium">${cable.max_power}W</p>
+              </div>
+              ` : ''}
+            </div>
+
+            <div class="mb-4">
+              <p class="text-gray-500 text-xs uppercase tracking-wide mb-1">Connector</p>
+              <p class="text-gray-900 text-sm">
+                ${cable.pins} pins
+                ${cable.reversible ? '<span class="text-green-700 ml-1">(reversible)</span>' : ''}
+              </p>
+            </div>
+
+            ${confusionWarning}
+
+            <p class="text-gray-600 text-sm line-clamp-2">${cable.notes}</p>
+          </a>
+        </div>
+      `;
+    }
+
+    function updateFilterUI(filters) {
+      // Update rate chips
+      document.querySelectorAll('#rate-filters button').forEach(btn => {
+        const isActive = btn.dataset.rate === filters.rate;
+        btn.classList.toggle('bg-slate-800', isActive);
+        btn.classList.toggle('text-white', isActive);
+        btn.classList.toggle('border-slate-800', isActive);
+        btn.classList.toggle('bg-white', !isActive);
+        btn.classList.toggle('text-gray-700', !isActive);
+        btn.classList.toggle('border-gray-300', !isActive);
+      });
+
+      // Update power chips
+      document.querySelectorAll('#power-filters button').forEach(btn => {
+        const isActive = btn.dataset.power === filters.power;
+        btn.classList.toggle('bg-slate-800', isActive);
+        btn.classList.toggle('text-white', isActive);
+        btn.classList.toggle('border-slate-800', isActive);
+        btn.classList.toggle('bg-white', !isActive);
+        btn.classList.toggle('text-gray-700', !isActive);
+        btn.classList.toggle('border-gray-300', !isActive);
+      });
+
+      // Update video checkboxes
+      document.querySelectorAll('.video-checkbox').forEach(cb => {
+        cb.checked = filters.video.includes(cb.dataset.video);
+      });
+
+      // Update reversible checkbox
+      document.getElementById('reversible-filter').checked = filters.reversible;
+
+      // Update category chips
+      document.querySelectorAll('#category-filters button').forEach(btn => {
+        const isActive = btn.dataset.category === filters.category;
+        btn.classList.toggle('bg-slate-800', isActive);
+        btn.classList.toggle('text-white', isActive);
+        btn.classList.toggle('border-slate-800', isActive);
+        btn.classList.toggle('bg-white', !isActive);
+        btn.classList.toggle('text-gray-700', !isActive);
+        btn.classList.toggle('border-gray-300', !isActive);
+      });
+    }
+
+    function applyFilters() {
+      const filters = getFiltersFromURL();
+      updateFilterUI(filters);
+
+      const results = filterCables(filters);
+      const resultsEl = document.getElementById('filter-results');
+      const statusEl = document.getElementById('filter-status-text');
+      const noResultsEl = document.getElementById('no-results');
+
+      // Build status text
+      const filterParts = [];
+      if (filters.rate) filterParts.push(`${parseInt(filters.rate)/1000}+ Gbps`);
+      if (filters.power) filterParts.push(`${filters.power}W+`);
+      if (filters.video.length) filterParts.push(filters.video.join(', '));
+      if (filters.reversible) filterParts.push('reversible');
+      if (filters.category) filterParts.push(filters.category);
+
+      const filterStr = filterParts.length > 0 ? ` (${filterParts.join(', ')})` : '';
+      statusEl.textContent = `${results.length} cable${results.length !== 1 ? 's' : ''}${filterStr}`;
+
+      if (results.length > 0) {
+        resultsEl.innerHTML = results.map(cable => createCableCard(cable)).join('');
+        resultsEl.style.display = 'grid';
+        noResultsEl.style.display = 'none';
+      } else {
+        resultsEl.style.display = 'none';
+        noResultsEl.style.display = 'block';
+      }
+    }
+
+    function clearFilters() {
+      window.history.replaceState({}, '', window.location.pathname);
+      applyFilters();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      applyFilters();
+
+      // Rate filter clicks
+      document.querySelectorAll('#rate-filters button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filters = getFiltersFromURL();
+          filters.rate = btn.dataset.rate;
+          updateURL(filters);
+          applyFilters();
+        });
+      });
+
+      // Power filter clicks
+      document.querySelectorAll('#power-filters button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filters = getFiltersFromURL();
+          filters.power = btn.dataset.power;
+          updateURL(filters);
+          applyFilters();
+        });
+      });
+
+      // Video checkbox changes
+      document.querySelectorAll('.video-checkbox').forEach(cb => {
+        cb.addEventListener('change', () => {
+          const filters = getFiltersFromURL();
+          if (cb.checked) {
+            if (!filters.video.includes(cb.dataset.video)) {
+              filters.video.push(cb.dataset.video);
+            }
+          } else {
+            filters.video = filters.video.filter(v => v !== cb.dataset.video);
+          }
+          updateURL(filters);
+          applyFilters();
+        });
+      });
+
+      // Reversible checkbox
+      document.getElementById('reversible-filter').addEventListener('change', (e) => {
+        const filters = getFiltersFromURL();
+        filters.reversible = e.target.checked;
+        updateURL(filters);
+        applyFilters();
+      });
+
+      // Category filter clicks
+      document.querySelectorAll('#category-filters button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filters = getFiltersFromURL();
+          filters.category = btn.dataset.category;
+          updateURL(filters);
+          applyFilters();
+        });
+      });
+
+      // Clear filters buttons
+      document.getElementById('clear-filters').addEventListener('click', clearFilters);
+      document.getElementById('no-results-clear').addEventListener('click', clearFilters);
+    });
+  </script>
+</BaseLayout>
