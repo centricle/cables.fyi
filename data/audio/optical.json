@@ -1,0 +1,96 @@
+{
+  "type": "Optical Audio",
+  "full_name": "TOSLINK / S/PDIF Optical",
+  "standard_body": "IEC 60958, EIAJ CP-1201 (TOSLINK)",
+  "common_names": ["TOSLINK", "Optical", "SPDIF Optical", "Lightpipe", "ADAT Lightpipe"],
+  "protocols": {
+    "S/PDIF (Stereo)": {
+      "version": "S/PDIF",
+      "data_rate": "3.072 Mbps",
+      "data_rate_mbps": 3.072,
+      "features": ["2-channel PCM up to 24-bit/192kHz", "Dolby Digital (AC-3)", "DTS"],
+      "cable_requirements": "Standard TOSLINK cable",
+      "max_length": "10m typical, 5m recommended"
+    },
+    "Dolby Digital": {
+      "version": "Dolby Digital",
+      "data_rate": "640 kbps max",
+      "data_rate_mbps": 0.64,
+      "features": ["5.1 surround (compressed)", "AC-3 encoding", "Standard for DVD/Blu-ray"],
+      "cable_requirements": "Standard TOSLINK cable",
+      "max_length": "10m"
+    },
+    "DTS": {
+      "version": "DTS",
+      "data_rate": "1.536 Mbps max",
+      "data_rate_mbps": 1.536,
+      "features": ["5.1 surround (compressed)", "DTS-HD (core only)", "Higher bitrate than Dolby"],
+      "cable_requirements": "Standard TOSLINK cable",
+      "max_length": "10m"
+    },
+    "ADAT Lightpipe": {
+      "version": "ADAT",
+      "data_rate": "12.288 Mbps",
+      "data_rate_mbps": 12.288,
+      "features": ["8 channels at 48kHz/24-bit", "4 channels at 96kHz", "Professional audio"],
+      "cable_requirements": "Standard TOSLINK cable (same connector)",
+      "max_length": "5m recommended"
+    }
+  },
+  "connector": {
+    "pins": 1,
+    "width": 9.0,
+    "height": 9.0,
+    "depth": 10.0,
+    "reversible": false,
+    "shape": "square with rounded top (TOSLINK) or 3.5mm (Mini-TOSLINK)",
+    "unit": "mm"
+  },
+  "electrical": {
+    "voltage_max": 0,
+    "signal_type": "optical (light)",
+    "wavelength": "650nm (red LED)"
+  },
+  "compatibility": {
+    "backwards": [],
+    "forwards": [],
+    "adapters_to": ["Coaxial S/PDIF (converter)", "HDMI ARC (via receiver)"],
+    "adapters_from": ["Coaxial S/PDIF (converter)", "3.5mm Mini-TOSLINK (adapter)"]
+  },
+  "common_devices": [
+    "TVs",
+    "Soundbars",
+    "AV receivers",
+    "Game consoles (PS4, Xbox)",
+    "Blu-ray players",
+    "CD players",
+    "DACs",
+    "Audio interfaces (ADAT)",
+    "Mac computers (Mini-TOSLINK in headphone jack)"
+  ],
+  "confusion_points": [
+    "TOSLINK is the connector, S/PDIF is the protocol - they're often used interchangeably but aren't the same",
+    "Cannot carry Dolby TrueHD or DTS-HD Master Audio (lossless formats) - bandwidth too low",
+    "Cannot carry Dolby Atmos or DTS:X (object-based audio) - use HDMI eARC instead",
+    "Mini-TOSLINK (3.5mm optical) looks like a headphone jack but uses light",
+    "Some Macs have combo 3.5mm/Mini-TOSLINK ports - you need a Mini-TOSLINK adapter",
+    "Cable length affects signal quality - keep under 5m for reliability",
+    "Cheap cables work fine - unlike analog, optical is digital so cable quality matters less",
+    "The red light should be visible when active - useful for troubleshooting"
+  ],
+  "buying_guide": "Any basic TOSLINK cable will work - expensive cables provide no benefit for optical digital audio. Keep cables under 5m for best reliability. If connecting to a Mac's combo jack, you need a Mini-TOSLINK to TOSLINK adapter. For lossless surround sound (Atmos, TrueHD), optical won't work - use HDMI ARC/eARC instead. Optical is still useful for connecting TVs to soundbars when you don't need lossless audio formats.",
+  "notes": "TOSLINK was developed by Toshiba in 1983 (Toshiba Link). It uses fiber optic cable to transmit digital audio, eliminating ground loops and electrical interference. While it can't match HDMI's bandwidth for lossless surround formats, it remains popular for TV-to-soundbar connections due to simplicity. The connector has a distinctive square shape, and you can often see red light when the cable is connected and active.",
+  "sources": [
+    {
+      "name": "IEC 60958 Standard",
+      "url": "https://webstore.iec.ch/publication/4041",
+      "access_date": "2025-01-15"
+    },
+    {
+      "name": "Wikipedia - TOSLINK",
+      "url": "https://en.wikipedia.org/wiki/TOSLINK",
+      "access_date": "2025-01-15"
+    }
+  ],
+  "last_updated": "2025-01-21"
+}

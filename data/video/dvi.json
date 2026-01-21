@@ -1,0 +1,106 @@
+{
+  "type": "DVI",
+  "full_name": "Digital Visual Interface",
+  "standard_body": "DDWG (Digital Display Working Group)",
+  "common_names": ["DVI", "DVI-D", "DVI-I", "DVI-A"],
+  "protocols": {
+    "DVI-A": {
+      "version": "DVI-A",
+      "data_rate": "Analog",
+      "data_rate_mbps": 0,
+      "video_support": ["Up to 1920x1200@60Hz (analog)"],
+      "features": ["Analog signal only", "VGA equivalent", "17 pins"],
+      "cable_requirements": "DVI-A cable",
+      "max_length": "5m typical"
+    },
+    "DVI-D Single Link": {
+      "version": "Single Link",
+      "data_rate": "3.96 Gbps",
+      "data_rate_mbps": 3960,
+      "video_support": ["1920x1200@60Hz", "1080p@60Hz"],
+      "features": ["Digital only", "19 pins", "HDCP support"],
+      "cable_requirements": "DVI-D Single Link cable",
+      "max_length": "5m for full resolution"
+    },
+    "DVI-D Dual Link": {
+      "version": "Dual Link",
+      "data_rate": "7.92 Gbps",
+      "data_rate_mbps": 7920,
+      "video_support": ["2560x1600@60Hz", "1080p@120Hz"],
+      "features": ["Digital only", "25 pins", "Higher resolutions", "HDCP support"],
+      "cable_requirements": "DVI-D Dual Link cable",
+      "max_length": "5m for full resolution"
+    },
+    "DVI-I Single Link": {
+      "version": "DVI-I Single",
+      "data_rate": "3.96 Gbps (digital)",
+      "data_rate_mbps": 3960,
+      "video_support": ["1920x1200@60Hz digital", "VGA resolutions analog"],
+      "features": ["Digital + Analog", "23 pins", "Most versatile"],
+      "cable_requirements": "DVI-I cable",
+      "max_length": "5m typical"
+    },
+    "DVI-I Dual Link": {
+      "version": "DVI-I Dual",
+      "data_rate": "7.92 Gbps (digital)",
+      "data_rate_mbps": 7920,
+      "video_support": ["2560x1600@60Hz digital", "VGA resolutions analog"],
+      "features": ["Digital + Analog", "29 pins", "Highest capability"],
+      "cable_requirements": "DVI-I Dual Link cable",
+      "max_length": "5m typical"
+    }
+  },
+  "connector": {
+    "pins": 29,
+    "width": 39.5,
+    "height": 15.13,
+    "depth": 12.0,
+    "reversible": false,
+    "shape": "rectangular with blade",
+    "unit": "mm"
+  },
+  "electrical": {
+    "voltage_max": 5,
+    "current_max": 1.5,
+    "power_max": 7.5
+  },
+  "compatibility": {
+    "backwards": ["VGA (DVI-I/DVI-A only)"],
+    "forwards": [],
+    "adapters_to": ["HDMI (DVI-D, passive)", "VGA (DVI-I/DVI-A, passive)", "DisplayPort (active)"],
+    "adapters_from": ["HDMI (passive)", "DisplayPort (passive/active)", "VGA (DVI-I only)"]
+  },
+  "common_devices": [
+    "Older monitors (2000s-2010s)",
+    "Graphics cards (older)",
+    "Desktop computers",
+    "Projectors",
+    "KVM switches",
+    "Video editing equipment"
+  ],
+  "confusion_points": [
+    "DVI-D, DVI-I, and DVI-A are physically different - DVI-D won't fit in a DVI-A port",
+    "Single Link vs Dual Link cables look similar but Dual Link has more pins in the center",
+    "DVI-I ports accept DVI-D cables, but DVI-D ports don't accept DVI-I cables (extra analog pins)",
+    "The flat blade pin on one side indicates analog capability - DVI-D lacks this blade",
+    "DVI-to-HDMI adapters only work with DVI-D/DVI-I (digital), not DVI-A",
+    "No audio support - DVI is video only unlike HDMI",
+    "Dual Link is required for resolutions above 1920x1200@60Hz",
+    "Many 'DVI cables' sold are Single Link even when Dual Link is needed"
+  ],
+  "buying_guide": "First identify your port type: DVI-D (no blade, digital only), DVI-I (blade + pins, digital and analog), or DVI-A (blade only, analog only). For 1080p@60Hz or 1920x1200, Single Link is sufficient. For higher resolutions or refresh rates, you need Dual Link. For HDMI conversion, any DVI-D or DVI-I cable works with a passive adapter. DVI is being phased out - consider HDMI or DisplayPort for new setups.",
+  "notes": "DVI was the bridge between VGA and HDMI, introduced in 1999. It's largely obsolete now - most new equipment uses HDMI or DisplayPort. However, it remains common on older monitors and is still found on some professional equipment and KVM switches. The lack of audio support and bulky connector size contributed to its decline.",
+  "sources": [
+    {
+      "name": "DDWG DVI Specification",
+      "url": "https://www.cs.unc.edu/~stc/FAQs/Video/dvi_spec-V1_0.pdf",
+      "access_date": "2025-01-15"
+    },
+    {
+      "name": "Wikipedia - Digital Visual Interface",
+      "url": "https://en.wikipedia.org/wiki/Digital_Visual_Interface",
+      "access_date": "2025-01-15"
+    }
+  ],
+  "last_updated": "2025-01-21"
+}

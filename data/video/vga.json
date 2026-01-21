@@ -1,0 +1,107 @@
+{
+  "type": "VGA",
+  "full_name": "Video Graphics Array",
+  "standard_body": "IBM (original), VESA (extensions)",
+  "common_names": ["VGA", "D-Sub", "DE-15", "HD-15", "RGB"],
+  "protocols": {
+    "VGA (Original)": {
+      "version": "VGA",
+      "data_rate": "Analog",
+      "data_rate_mbps": 0,
+      "video_support": ["640x480@60Hz"],
+      "features": ["Analog RGB", "15 pins", "Original IBM standard"],
+      "cable_requirements": "VGA cable",
+      "max_length": "15m at 640x480"
+    },
+    "SVGA": {
+      "version": "SVGA",
+      "data_rate": "Analog",
+      "data_rate_mbps": 0,
+      "video_support": ["800x600@60Hz", "1024x768@60Hz"],
+      "features": ["Higher resolutions than VGA", "VESA standard"],
+      "cable_requirements": "VGA cable",
+      "max_length": "10m typical"
+    },
+    "XGA": {
+      "version": "XGA",
+      "data_rate": "Analog",
+      "data_rate_mbps": 0,
+      "video_support": ["1024x768@75Hz", "1280x1024@60Hz"],
+      "features": ["Extended resolution", "Common business resolution"],
+      "cable_requirements": "VGA cable",
+      "max_length": "7.5m typical"
+    },
+    "UXGA": {
+      "version": "UXGA",
+      "data_rate": "Analog",
+      "data_rate_mbps": 0,
+      "video_support": ["1600x1200@60Hz"],
+      "features": ["Ultra extended resolution", "High quality cable required"],
+      "cable_requirements": "High quality shielded VGA cable",
+      "max_length": "5m for full quality"
+    },
+    "1080p": {
+      "version": "1080p",
+      "data_rate": "Analog",
+      "data_rate_mbps": 0,
+      "video_support": ["1920x1080@60Hz"],
+      "features": ["HD resolution", "Requires quality cable and hardware"],
+      "cable_requirements": "High quality shielded VGA cable",
+      "max_length": "3-5m for full quality"
+    }
+  },
+  "connector": {
+    "pins": 15,
+    "rows": 3,
+    "width": 31.0,
+    "height": 11.0,
+    "depth": 17.0,
+    "reversible": false,
+    "shape": "D-subminiature (DE-15)",
+    "unit": "mm"
+  },
+  "electrical": {
+    "voltage_max": 5,
+    "signal_voltage": 0.7
+  },
+  "compatibility": {
+    "backwards": [],
+    "forwards": [],
+    "adapters_to": ["HDMI (active)", "DisplayPort (active)", "DVI-A (passive)", "DVI-I (passive)"],
+    "adapters_from": ["HDMI (active)", "DisplayPort (active)", "DVI-I (passive)", "DVI-A (passive)"]
+  },
+  "common_devices": [
+    "Older monitors",
+    "Projectors",
+    "Older laptops",
+    "Desktop computers (legacy)",
+    "KVM switches",
+    "Point-of-sale systems",
+    "Industrial equipment"
+  ],
+  "confusion_points": [
+    "VGA is analog - digital sources need active converters (not just cables) to connect to VGA",
+    "Cable quality dramatically affects image quality - cheap cables cause ghosting and blur at high resolutions",
+    "Maximum resolution depends on both cable quality and cable length",
+    "HDMI-to-VGA and DisplayPort-to-VGA require active adapters with chips (not passive cables)",
+    "VGA-to-HDMI adapters need external power since VGA can't power the conversion chip",
+    "The connector is sometimes called 'HD-15' but has nothing to do with HD video",
+    "Screw-in connectors are important for signal quality - don't leave them loose",
+    "No audio support - VGA is video only"
+  ],
+  "buying_guide": "For resolutions above 1024x768, invest in quality shielded cables with ferrite cores. Keep cables as short as possible - every extra meter degrades signal quality. For connecting modern HDMI/DisplayPort sources to VGA displays, you need an active adapter (not just a cable). These adapters typically cost $15-30 and may need USB power. VGA is obsolete technology - if possible, use HDMI or DisplayPort instead.",
+  "notes": "VGA was introduced by IBM in 1987 and became the universal PC video standard for nearly 30 years. Despite being obsolete, it persists in projectors, older displays, and legacy equipment. As an analog standard, it's susceptible to interference and signal degradation - problems that digital connections like HDMI and DisplayPort solved. The 'VGA' name technically refers to the original 640x480 standard, but the connector is used for much higher resolutions.",
+  "sources": [
+    {
+      "name": "VESA Standards",
+      "url": "https://vesa.org/vesa-standards/",
+      "access_date": "2025-01-15"
+    },
+    {
+      "name": "Wikipedia - VGA connector",
+      "url": "https://en.wikipedia.org/wiki/VGA_connector",
+      "access_date": "2025-01-15"
+    }
+  ],
+  "last_updated": "2025-01-21"
+}
