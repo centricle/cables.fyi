@@ -1,2 +1,16 @@
+# Build output
+dist/
+
+# Astro generated files
+.astro/
+
 # Local Netlify folder
 .netlify
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.*
+!.env.example
