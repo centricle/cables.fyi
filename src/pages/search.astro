@@ -1,0 +1,386 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAllCategories, searchCables, getMaxDataRate, getMaxPower } from '../utils/cableData';
+
+// Get data for server-side calculations only
+const allCategories = getAllCategories();
+const totalCableCount = allCategories.reduce((total, cat) => total + cat.cables.length, 0);
+
+// Calculate popular search results dynamically
+const popularSearches = [
+  'USB-C', 'Thunderbolt', 'HDMI', '40 Gbps', '100W', 'DisplayPort'
+].map(term => ({
+  term,
+  count: searchCables(term).length
+})).filter(item => item.count > 0);
+
+// Prepare minimal client-side data for search
+const clientCables = allCategories.flatMap(cat =>
+  cat.cables.map(cable => {
+    const primaryProtocol = Object.keys(cable.protocols)[0];
+    const primaryProtoInfo = cable.protocols[primaryProtocol];
+
+    return {
+      // Search fields
+      type: cable.type,
+      full_name: cable.full_name,
+      common_names: cable.common_names,
+      common_devices: cable.common_devices,
+      protocol_names: Object.keys(cable.protocols),
+      features: Object.values(cable.protocols).flatMap(p => p.features),
+      data_rates: Object.values(cable.protocols).map(p => p.data_rate_mbps),
+
+      // Display fields (minimal)
+      categorySlug: cat.slug,
+      standard_body: cable.standard_body,
+      max_rate_mbps: getMaxDataRate(cable),
+      max_power: getMaxPower(cable),
+      pins: cable.connector.pins,
+      reversible: cable.connector.reversible,
+      confusion_points: cable.confusion_points,
+      notes: cable.notes
+    };
+  })
+);
+
+const title = 'Search Cables | Cables.Guide';
+const description = 'Search the comprehensive cable and connector database by type, protocol, data rate, or power delivery.';
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Header Section -->
+      <div class="mb-12">
+        <nav class="flex mb-6" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+              <a href="/" class="text-gray-700 hover:underline">Home</a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <span class="mr-2 text-gray-400">/</span>
+                <span class="text-gray-500 uppercase">Search</span>
+              </div>
+            </li>
+          </ol>
+        </nav>
+
+        <div class="text-center">
+          <h1 class="text-4xl font-bold text-gray-900 mb-4">Search Cables</h1>
+
+          <!-- Search Form -->
+          <div class="max-w-2xl mx-auto mb-8">
+            <form method="GET" action="/search" class="flex gap-4" role="search" aria-label="Search cables">
+              <input
+                type="search"
+                name="q"
+                placeholder="Search by type, protocol, or data rate (e.g. USB-C, Thunderbolt 4, 40 Gbps)..."
+                aria-label="Search cable database by type, protocol, or data rate"
+                class="flex-1 px-4 py-3 text-gray-900 bg-white border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 focus:outline-none"
+              />
+              <button
+                type="submit"
+                aria-label="Search cables"
+                class="px-6 py-3 bg-slate-800 text-white font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-colors"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+
+          <div id="search-status" class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-900" style="display: none;">
+            <span class="font-medium" id="search-status-text"></span>
+          </div>
+
+          <div id="search-loading" class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700" style="display: none;">
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-gray-700" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="font-medium">Searching...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Results Container -->
+      <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" style="display: none;">
+      </div>
+
+      <!-- No Results -->
+      <div id="no-results" class="text-center py-12" style="display: none;">
+        <div class="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-semibold text-gray-900 mb-2">No results found</h2>
+        <p class="text-gray-600 mb-6">
+          No cables matching "<span class="font-medium" id="no-results-query"></span>".
+        </p>
+        <div class="space-y-4">
+          <p class="text-sm text-gray-500">Try searching for:</p>
+          <div class="flex flex-wrap justify-center gap-2">
+            {['USB-C', 'HDMI', 'Thunderbolt', 'DisplayPort', '40 Gbps', '100W'].map(suggestion => (
+              <a
+                href={`/search?q=${encodeURIComponent(suggestion)}`}
+                class="px-3 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors text-sm focus:ring-2 focus:ring-gray-300 focus:outline-none"
+              >
+                {suggestion}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Default Content (when no search) -->
+      <div id="default-content">
+        <div class="text-center py-12">
+          <div class="mx-auto w-24 h-24 bg-slate-800 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">Search the cable database</h2>
+          <p class="text-gray-600 mb-8 max-w-2xl mx-auto">
+            Find cables by type (USB-C, HDMI), protocol (Thunderbolt 4, USB4), data rate (40 Gbps), or power (100W).
+            {totalCableCount > 0 && `The database includes ${totalCableCount} connector types with complete specifications.`}
+          </p>
+
+          {popularSearches.length > 0 && (
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">Popular Searches</h3>
+                <div class="flex flex-wrap justify-center gap-3">
+                  {popularSearches.map(item => (
+                    <a
+                      href={`/search?q=${encodeURIComponent(item.term)}`}
+                      class="group border border-gray-300 bg-gray-50 px-4 py-3 transition-colors hover:bg-blue-50"
+                    >
+                      <span class="font-medium text-gray-900 group-hover:text-blue-900">{item.term}</span>
+                      <span class="block text-sm text-gray-500">{item.count} result{item.count !== 1 ? 's' : ''}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div class="mt-8">
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Browse by Category</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 max-w-5xl mx-auto">
+              <a href="/usb" class="group border border-gray-300 bg-gray-50 p-4 transition-colors hover:bg-blue-50">
+                <h4 class="font-medium text-gray-900 group-hover:text-blue-900">USB</h4>
+                <p class="mb-0 text-sm text-gray-500">USB-C, USB-A, Micro</p>
+              </a>
+              <a href="/video" class="group border border-gray-300 bg-gray-50 p-4 transition-colors hover:bg-blue-50">
+                <h4 class="font-medium text-gray-900 group-hover:text-blue-900">Video</h4>
+                <p class="mb-0 text-sm text-gray-500">HDMI, DisplayPort</p>
+              </a>
+              <a href="/audio" class="group border border-gray-300 bg-gray-50 p-4 transition-colors hover:bg-blue-50">
+                <h4 class="font-medium text-gray-900 group-hover:text-blue-900">Audio</h4>
+                <p class="mb-0 text-sm text-gray-500">3.5mm, XLR, RCA</p>
+              </a>
+              <a href="/power" class="group border border-gray-300 bg-gray-50 p-4 transition-colors hover:bg-blue-50">
+                <h4 class="font-medium text-gray-900 group-hover:text-blue-900">Power</h4>
+                <p class="mb-0 text-sm text-gray-500">Barrel, IEC, NEMA</p>
+              </a>
+              <a href="/legacy" class="group border border-gray-300 bg-gray-50 p-4 transition-colors hover:bg-blue-50">
+                <h4 class="font-medium text-gray-900 group-hover:text-blue-900">Legacy</h4>
+                <p class="mb-0 text-sm text-gray-500">Serial, PS/2, FireWire</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script define:vars={{ clientCables }}>
+    // Cable data and search functionality
+    const cableData = clientCables;
+
+    function formatDataRate(mbps) {
+      if (mbps >= 1000) {
+        return `${mbps / 1000} Gbps`;
+      }
+      return `${mbps} Mbps`;
+    }
+
+    function searchCables(query) {
+      if (!query) return [];
+
+      const searchTerm = query.toLowerCase();
+
+      // Check for data rate pattern (e.g., "40 Gbps", "480 Mbps", "10Gbps")
+      const dataRateMatch = query.match(/(\d+\.?\d*)\s*(gbps|mbps|gb\/s|mb\/s)/i);
+      let targetRateMbps = null;
+      if (dataRateMatch) {
+        const value = parseFloat(dataRateMatch[1]);
+        const unit = dataRateMatch[2].toLowerCase();
+        targetRateMbps = unit.startsWith('g') ? value * 1000 : value;
+      }
+
+      // Check for power pattern (e.g., "100W", "240 W")
+      const powerMatch = query.match(/(\d+\.?\d*)\s*w/i);
+      const targetPower = powerMatch ? parseFloat(powerMatch[1]) : null;
+
+      return cableData.filter(cable => {
+        // Standard text matching
+        const textMatch = (
+          cable.type.toLowerCase().includes(searchTerm) ||
+          cable.full_name.toLowerCase().includes(searchTerm) ||
+          cable.common_names.some(name => name.toLowerCase().includes(searchTerm)) ||
+          cable.common_devices.some(device => device.toLowerCase().includes(searchTerm)) ||
+          cable.protocol_names.some(proto => proto.toLowerCase().includes(searchTerm)) ||
+          cable.features.some(f => f.toLowerCase().includes(searchTerm))
+        );
+
+        // Data rate matching
+        const rateMatch = targetRateMbps ? cable.data_rates.some(rate => rate >= targetRateMbps) : false;
+
+        // Power matching
+        const powerMatchResult = targetPower ? (cable.max_power && cable.max_power >= targetPower) : false;
+
+        return textMatch || rateMatch || powerMatchResult;
+      });
+    }
+
+    function highlightSearchTerm(text, searchTerm) {
+      if (!searchTerm || !text) return text;
+      const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(regex, '<mark class="bg-yellow-100 text-gray-900">$1</mark>');
+    }
+
+    function createCableCard(cable, searchTerm) {
+      const confusionWarning = cable.confusion_points.length > 0
+        ? `<div class="mb-4 p-2 bg-amber-50 border border-amber-200">
+             <p class="text-amber-800 text-sm">⚠️ ${cable.confusion_points[0]}</p>
+           </div>`
+        : '';
+
+      return `
+        <div class="bg-white hover:shadow-lg hover:bg-blue-50 transition-shadow duration-200 border border-gray-300">
+          <a href="/${cable.categorySlug}/${cable.type.toLowerCase().replace(/[^a-z0-9]/g, '-')}" class="block p-6">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-1">${highlightSearchTerm(cable.type, searchTerm)}</h3>
+                <p class="text-gray-600 text-sm">${highlightSearchTerm(cable.full_name, searchTerm)}</p>
+              </div>
+              <div class="text-right">
+                <span class="inline-block bg-slate-100 px-2 py-1 text-sm whitespace-nowrap text-slate-700 uppercase">
+                  ${cable.standard_body}
+                </span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p class="text-gray-500 text-xs uppercase tracking-wide">Max Speed</p>
+                <p class="text-gray-900 font-medium">${formatDataRate(cable.max_rate_mbps)}</p>
+              </div>
+              ${cable.max_power ? `
+              <div>
+                <p class="text-gray-500 text-xs uppercase tracking-wide">Max Power</p>
+                <p class="text-gray-900 font-medium">${cable.max_power}W</p>
+              </div>
+              ` : ''}
+            </div>
+
+            <div class="mb-4">
+              <p class="text-gray-500 text-xs uppercase tracking-wide mb-1">Connector</p>
+              <p class="text-gray-900 text-sm">
+                ${cable.pins} pins
+                ${cable.reversible ? '<span class="text-green-700 ml-1">(reversible)</span>' : ''}
+              </p>
+            </div>
+
+            ${confusionWarning}
+
+            <p class="text-gray-600 text-sm line-clamp-2">${highlightSearchTerm(cable.notes, searchTerm)}</p>
+          </a>
+        </div>
+      `;
+    }
+
+    function performSearch() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const query = urlParams.get('q') || '';
+      const searchInput = document.querySelector('input[name="q"]');
+
+      if (searchInput) {
+        searchInput.value = query;
+      }
+
+      const defaultContent = document.getElementById('default-content');
+      const loadingEl = document.getElementById('search-loading');
+      const statusEl = document.getElementById('search-status');
+      const resultsEl = document.getElementById('search-results');
+      const noResultsEl = document.getElementById('no-results');
+
+      if (!query) {
+        // Show default content
+        statusEl.style.display = 'none';
+        loadingEl.style.display = 'none';
+        resultsEl.style.display = 'none';
+        noResultsEl.style.display = 'none';
+        defaultContent.style.display = 'block';
+        return;
+      }
+
+      // Hide default content
+      defaultContent.style.display = 'none';
+
+      // Show loading state
+      loadingEl.style.display = 'flex';
+      statusEl.style.display = 'none';
+      resultsEl.style.display = 'none';
+      noResultsEl.style.display = 'none';
+
+      // Simulate brief loading delay for UX
+      setTimeout(() => {
+        const results = searchCables(query);
+        const statusTextEl = document.getElementById('search-status-text');
+        const noResultsQueryEl = document.getElementById('no-results-query');
+
+        // Hide loading
+        loadingEl.style.display = 'none';
+
+        // Update status
+        statusEl.style.display = 'flex';
+        statusTextEl.textContent = `${results.length} result${results.length !== 1 ? 's' : ''} for "${query}"`;
+
+        if (results.length > 0) {
+          // Show results
+          resultsEl.innerHTML = results.map(cable => createCableCard(cable, query)).join('');
+          resultsEl.style.display = 'grid';
+          noResultsEl.style.display = 'none';
+        } else {
+          // Show no results
+          noResultsQueryEl.textContent = query;
+          resultsEl.style.display = 'none';
+          noResultsEl.style.display = 'block';
+        }
+      }, 150); // Brief delay to show loading state
+    }
+
+    // Perform search on page load
+    document.addEventListener('DOMContentLoaded', performSearch);
+
+    // Handle form submission
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('form');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const formData = new FormData(form);
+          const query = formData.get('q');
+          const url = new URL(window.location);
+          url.searchParams.set('q', query);
+          window.history.pushState({}, '', url);
+          performSearch();
+        });
+      }
+    });
+  </script>
+</BaseLayout>

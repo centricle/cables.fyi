@@ -1,0 +1,166 @@
+{
+  "type": "USB-C",
+  "full_name": "USB Type-C",
+  "standard_body": "USB-IF",
+  "common_names": ["USB-C", "Type-C", "USB Type-C"],
+  "protocols": {
+    "USB 2.0": {
+      "version": "2.0",
+      "data_rate": "480 Mbps",
+      "data_rate_mbps": 480,
+      "power_delivery": "7.5W (USB BC 1.2)",
+      "features": ["Basic data transfer", "Charging"],
+      "cable_requirements": "Any USB-C cable",
+      "max_length": "4m"
+    },
+    "USB 3.2 Gen 1": {
+      "version": "3.2 Gen 1",
+      "data_rate": "5 Gbps",
+      "data_rate_mbps": 5000,
+      "power_delivery": "Up to 100W (USB PD)",
+      "features": ["SuperSpeed", "USB PD compatible"],
+      "cable_requirements": "USB 3.x rated cable",
+      "max_length": "2m"
+    },
+    "USB 3.2 Gen 2": {
+      "version": "3.2 Gen 2",
+      "data_rate": "10 Gbps",
+      "data_rate_mbps": 10000,
+      "power_delivery": "Up to 100W (USB PD)",
+      "features": ["SuperSpeed+", "USB PD compatible"],
+      "cable_requirements": "USB 3.2 Gen 2 rated cable",
+      "max_length": "1m"
+    },
+    "USB 3.2 Gen 2x2": {
+      "version": "3.2 Gen 2x2",
+      "data_rate": "20 Gbps",
+      "data_rate_mbps": 20000,
+      "power_delivery": "Up to 100W (USB PD)",
+      "features": ["SuperSpeed+ dual-lane", "USB PD compatible"],
+      "cable_requirements": "USB 3.2 Gen 2x2 rated cable, USB-C to USB-C only",
+      "max_length": "1m"
+    },
+    "USB4 Gen 2x2": {
+      "version": "USB4 20Gbps",
+      "data_rate": "20 Gbps",
+      "data_rate_mbps": 20000,
+      "power_delivery": "Up to 100W (USB PD 3.0)",
+      "video_support": ["DisplayPort 1.4a"],
+      "features": ["Tunneling protocol", "DisplayPort Alt Mode", "USB PD 3.0"],
+      "cable_requirements": "USB4 certified cable",
+      "max_length": "0.8m at 20Gbps"
+    },
+    "USB4 Gen 3x2": {
+      "version": "USB4 40Gbps",
+      "data_rate": "40 Gbps",
+      "data_rate_mbps": 40000,
+      "power_delivery": "Up to 100W (USB PD 3.0)",
+      "video_support": ["DisplayPort 2.0"],
+      "features": ["Tunneling protocol", "DisplayPort Alt Mode", "PCIe tunneling", "USB PD 3.0"],
+      "cable_requirements": "USB4 40Gbps certified cable",
+      "max_length": "0.8m passive, 2m active"
+    },
+    "USB4 Version 2.0": {
+      "version": "USB4 80Gbps",
+      "data_rate": "80 Gbps",
+      "data_rate_mbps": 80000,
+      "power_delivery": "Up to 240W (USB PD 3.1 EPR)",
+      "video_support": ["DisplayPort 2.1"],
+      "features": ["Tunneling protocol", "DisplayPort Alt Mode", "PCIe tunneling", "USB PD 3.1 EPR"],
+      "cable_requirements": "USB4 80Gbps certified cable",
+      "max_length": "1m"
+    },
+    "Thunderbolt 3": {
+      "version": "3",
+      "data_rate": "40 Gbps",
+      "data_rate_mbps": 40000,
+      "power_delivery": "Up to 100W",
+      "video_support": ["DisplayPort 1.2", "HDMI 2.0 (via adapter)"],
+      "features": ["PCIe tunneling", "Daisy-chaining (up to 6 devices)", "DisplayPort Alt Mode", "Intel certification required"],
+      "cable_requirements": "Thunderbolt 3 certified cable",
+      "max_length": "0.5m passive 40Gbps, 2m active"
+    },
+    "Thunderbolt 4": {
+      "version": "4",
+      "data_rate": "40 Gbps",
+      "data_rate_mbps": 40000,
+      "power_delivery": "Up to 100W",
+      "video_support": ["DisplayPort 1.4", "Dual 4K displays or single 8K"],
+      "features": ["PCIe tunneling (32 Gbps minimum)", "Daisy-chaining", "Wake from sleep", "Intel VT-d DMA protection", "Universal cables"],
+      "cable_requirements": "Thunderbolt 4 certified cable (also works as USB4)",
+      "max_length": "2m passive"
+    },
+    "Thunderbolt 5": {
+      "version": "5",
+      "data_rate": "80 Gbps (120 Gbps with Bandwidth Boost)",
+      "data_rate_mbps": 80000,
+      "power_delivery": "Up to 240W (USB PD 3.1 EPR)",
+      "video_support": ["DisplayPort 2.1", "Three 4K displays or single 8K"],
+      "features": ["PAM-3 signaling", "Bandwidth Boost for video", "PCIe Gen 4 tunneling", "USB4 v2 compatible"],
+      "cable_requirements": "Thunderbolt 5 certified cable",
+      "max_length": "1m passive at 80Gbps"
+    }
+  },
+  "connector": {
+    "pins": 24,
+    "rows": 2,
+    "pitch": 0.5,
+    "width": 8.4,
+    "height": 2.6,
+    "depth": 6.65,
+    "reversible": true,
+    "shape": "rectangular",
+    "unit": "mm"
+  },
+  "electrical": {
+    "voltage_max": 48,
+    "current_max": 5,
+    "power_max": 240,
+    "impedance": "90Ω differential (SuperSpeed)"
+  },
+  "compatibility": {
+    "backwards": ["USB 3.x (with adapter)", "USB 2.0 (with adapter)"],
+    "forwards": ["USB4", "Thunderbolt 4/5"],
+    "adapters_to": ["USB-A", "HDMI", "DisplayPort", "Ethernet", "SD card"],
+    "adapters_from": ["USB-A", "Micro USB", "Lightning (with adapter)"]
+  },
+  "common_devices": [
+    "Smartphones (Android)",
+    "Laptops",
+    "Tablets",
+    "Nintendo Switch",
+    "External SSDs",
+    "Monitors",
+    "Docking stations",
+    "Chargers and power banks"
+  ],
+  "confusion_points": [
+    "A USB-C cable does NOT guarantee fast charging or data transfer - capabilities depend on the cable's rating",
+    "USB-C is just the connector shape. The protocol (USB 2.0, 3.2, USB4, Thunderbolt) determines actual capabilities",
+    "Not all USB-C cables support video output - look for DisplayPort Alt Mode or Thunderbolt",
+    "USB4 and Thunderbolt 4 use the same connector but Thunderbolt requires Intel certification",
+    "A cheap USB-C cable may only support USB 2.0 (480 Mbps) even though it physically fits USB4 ports",
+    "Cable length affects maximum speed - longer cables often mean slower speeds",
+    "240W charging requires USB PD 3.1 EPR cables specifically - older PD cables max out at 100W"
+  ],
+  "buying_guide": "Look for USB-IF certification and check the cable's rated speed (Gen 1, Gen 2, etc.). For Thunderbolt, look for the lightning bolt logo. For high-power charging (over 60W), ensure the cable explicitly states its wattage rating. When in doubt, check for logos: USB trident for USB speeds, lightning bolt for Thunderbolt.",
+  "notes": "USB-C is the universal connector that isn't quite universal. The same physical connector supports wildly different capabilities depending on the cable, the port, and the protocol negotiated. This is both its greatest strength (one cable for everything) and its biggest source of confusion (which cable for what?).",
+  "sources": [
+    {
+      "name": "USB-IF USB Type-C Specification",
+      "url": "https://www.usb.org/document-library/usb-type-cr-cable-and-connector-specification-release-22",
+      "access_date": "2024-01-15"
+    },
+    {
+      "name": "USB-IF USB4 Specification",
+      "url": "https://www.usb.org/document-library/usb4tm-specification",
+      "access_date": "2024-01-15"
+    },
+    {
+      "name": "Intel Thunderbolt Technology",
+      "url": "https://www.thunderbolttechnology.net/",
+      "access_date": "2024-01-15"
+    }
+  ],
+  "last_updated": "2024-01-15"
+}
