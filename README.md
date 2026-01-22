@@ -1,4 +1,4 @@
-# cables.guide
+# whatcable.us
 
 A comprehensive database of cable and connector specifications. Demystifying USB-C, Thunderbolt, HDMI, and other connectors where the same physical shape can mean wildly different capabilities.
 
