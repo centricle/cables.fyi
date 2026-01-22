@@ -68,7 +68,7 @@ const connectors: ConnectorInfo[] = [
     {connectors.map((connector) => (
       <button
         type="button"
-        class="connector-btn group flex flex-col items-center p-4 rounded-2xl border-2 border-border bg-card hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        class="connector-btn group flex flex-col items-center p-4 rounded-2xl border-2 border-border bg-card hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
         data-connector={connector.id}
         aria-label={`Identify ${connector.name} connector`}
       >
