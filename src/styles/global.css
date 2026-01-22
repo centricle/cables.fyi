@@ -68,10 +68,6 @@
     @apply inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-md;
   }
 
-  .badge-primary {
-    @apply bg-primary/10 text-primary;
-  }
-
   .badge-muted {
     @apply bg-secondary text-muted-foreground border border-border;
   }
