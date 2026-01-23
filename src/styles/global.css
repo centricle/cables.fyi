@@ -114,7 +114,7 @@
 
   /* Chip/filter button styles */
   .filter-chip {
-    @apply px-3 py-1 border rounded-lg text-sm transition-colors;
+    @apply px-3 py-1 border rounded-lg text-sm transition-colors cursor-pointer;
   }
 
   .filter-chip-active {

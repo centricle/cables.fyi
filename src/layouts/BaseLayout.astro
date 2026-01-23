@@ -59,9 +59,10 @@ const {
 					<a href="/video" class="hover:underline">Video</a>
 					<a href="/audio" class="hover:underline">Audio</a>
 					<a href="/power" class="hover:underline">Power</a>
-					<a href="/filter" class="hover:underline">Filter</a>
-					<a href="/search" class="hover:underline">Search</a>
-					<a href="/learn/identify" class="hover:underline">Help</a>
+					|
+					<a href="/filter" class="text-muted-foreground hover:text-foreground hover:underline">Filter</a>
+					<a href="/search" class="text-muted-foreground hover:text-foreground hover:underline">Search</a>
+					<a href="/learn/identify" class="text-muted-foreground hover:text-foreground hover:underline">Identify</a>
 				</nav>
 
 				<!-- Mobile Menu Button -->
@@ -82,14 +83,19 @@ const {
 
 			<!-- Mobile Navigation Menu -->
 			<div class="md:hidden hidden" id="mobile-menu">
-				<div class="px-4 pt-2 pb-4 space-y-1 bg-card border-t border-border">
-					<a href="/usb" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">USB Connectors</a>
-					<a href="/video" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">Video Connectors</a>
-					<a href="/audio" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">Audio Connectors</a>
-					<a href="/power" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">Power Connectors</a>
-					<a href="/filter" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">Filter by Specs</a>
-					<a href="/search" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">Search Database</a>
-					<a href="/learn/identify" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">Identify Cable</a>
+				<div class="px-4 pt-2 pb-4 bg-card border-t border-border">
+					<div class="space-y-1">
+						<a href="/usb" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">USB Connectors</a>
+						<a href="/video" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">Video Connectors</a>
+						<a href="/audio" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">Audio Connectors</a>
+						<a href="/power" class="block px-3 py-3 text-foreground hover:bg-secondary rounded-lg transition-colors">Power Connectors</a>
+					</div>
+					<div class="border-t border-border my-2"></div>
+					<div class="space-y-1">
+						<a href="/filter" class="block px-3 py-3 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors">Filter by Specs</a>
+						<a href="/search" class="block px-3 py-3 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors">Search Database</a>
+						<a href="/learn/identify" class="block px-3 py-3 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors">Identify Cable</a>
+					</div>
 				</div>
 			</div>
 		</header>
